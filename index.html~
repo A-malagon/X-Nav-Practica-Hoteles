@@ -10,7 +10,7 @@
         <script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="googleplus.js"></script>
+		<script type="text/javascript" src="googleplus-api.js"></script>
         <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
         <script type="text/javascript" src="js/hoteles.js"></script>
         <script type="text/javascript" src="jquery-ui.css"></script>

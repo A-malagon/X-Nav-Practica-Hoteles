@@ -2,6 +2,9 @@
 var layers = [] 
 var collection = {}
 
+var hotel_users = {} //dicionario con clave holet y valor array de usuarios
+var select = ""; //que nombre esta selecionado
+
 function removeMarker(lat,lon){
 
         for (var i = 0; i < layers.length; i++) {
@@ -22,6 +25,7 @@ function show_info(no){
     var lon = accomodation.geoData.longitude;
     var url = accomodation.basicData.web;
     var name = accomodation.basicData.name;
+    select = name; //selecionada esta el hotel con este nombre
     var desc = accomodation.basicData.body;
     var imgs = accomodation.multimedia.media;
     var cat = accomodation.extradata.categorias.categoria.item[1]['#text'];
@@ -51,6 +55,14 @@ function show_info(no){
         first = ["",""];
     };
     $("#carouselFotos").show();
+//pintar usuarios goole plus
+    $("#content").html("");
+    var id;
+    hotel_users[name].forEach(function(id){
+
+     makeApiCall(id,name,"");
+
+    });
 
 }
 
@@ -99,6 +111,8 @@ function get_accomodations(){
       hotel += encontrados + '<ul>';
       for (var i = 0; i < accomodations.length; i++) {
         hotel += '<li no=' + i + '>' + accomodations[i].basicData.title + '</li>';
+        var users_plus = []; //array vacio usuarios google plus
+        hotel_users[accomodations[i].basicData.title] =  users_plus;
       }
       hotel += "</ul>";
       
@@ -170,6 +184,23 @@ $(document).ready(function() {
             
           });
           
+      });
+
+
+      $( "#form2" ).submit(function(event) {
+          event.preventDefault(); //con esto no se recarga la pagina
+          var new_id = $("#col_name2")[0].value;
+          if (new_id == ""){
+            alert("Debes introducir un id")
+            return;
+          }
+          $("#col_name2")[0].value = "";
+          if (select == ""){
+            return; // si no esta selecionado se acaba
+            
+          }
+          makeApiCall(new_id,select,"new");
+
       });
 
 });
