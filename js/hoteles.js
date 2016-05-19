@@ -140,67 +140,164 @@ $(document).ready(function() {
         show_info($(this._popup._content).attr('no'));
     });  
 
-      $("#containerCollections" ).droppable({
-          drop: function( event, ui ) {
+          $("#containerCollections" ).droppable({
+              drop: function( event, ui ) {
 
-            var key = $(".col_title")[0].textContent;
-            if (key == "") return;
+                var key = $(".col_title")[0].textContent;
+                if (key == "") return;
 
-            var no = ui.draggable[0].attributes[0].value;
-            var hotel = accomodations[no].basicData.name;
-            collection[key].push(accomodations[no])
+                var no = ui.draggable[0].attributes[0].value;
+                var hotel = accomodations[no].basicData.name;
+                collection[key].push(accomodations[no])
 
-            $("#mostrarColecciones ul").append("<li>" + hotel + "</li>");
+                $("#mostrarColecciones ul").append("<li>" + hotel + "</li>");
 
-          }
-      });
-
-      $( "#form1" ).submit(function(event) {
-          event.preventDefault();
-          var new_col = $("#col_name1")[0].value;
-          $("#col_name1")[0].value = "";
-          if(new_col != ""){
-              $(".columColecciones2 ul").append("<li>" + new_col + "</li>");
-          }
-          var c_accomodations = []
-          collection[new_col] = c_accomodations;
-
-          $(".columColecciones2 li").click(function(event){
-            var coll = event.target.textContent;
-            
-            $(".col_title").html(coll)
-            var colum = coll + ":";
-            $("#colSelect").html(colum)
-
-            $("#mostrarColecciones ul").html("");
-            $(".columColecciones ul").html("");
-            var hotel;
-            collection[coll].forEach(function(n){
-
-              hotel = n.basicData.name;
-              $("#mostrarColecciones ul").append("<li>" + hotel + "</li>")
-              $(".columColecciones ul").append("<li>" + hotel + "</li>");
-            });
-            
+              }
           });
-          
-      });
+
+          $( "#form1" ).submit(function(event) {
+              event.preventDefault();
+              var new_col = $("#col_name1")[0].value;
+              $("#col_name1")[0].value = "";
+              if(new_col != ""){
+                  $(".columColecciones2 ul").append("<li>" + new_col + "</li>");
+              }
+              var c_accomodations = []
+              collection[new_col] = c_accomodations;
+
+              $(".columColecciones2 li").click(function(event){
+                var coll = event.target.textContent;
+                
+                $(".col_title").html(coll)
+                var colum = coll + ":";
+                $("#colSelect").html(colum)
+
+                $("#mostrarColecciones ul").html("");
+                $(".columColecciones ul").html("");
+                var hotel;
+                collection[coll].forEach(function(n){
+
+                  hotel = n.basicData.name;
+                  $("#mostrarColecciones ul").append("<li>" + hotel + "</li>")
+                  $(".columColecciones ul").append("<li>" + hotel + "</li>");
+                });
+                
+              });
+              
+          });
 
 
-      $( "#form2" ).submit(function(event) {
+          $( "#form2" ).submit(function(event) {
+              event.preventDefault(); //con esto no se recarga la pagina
+              var new_id = $("#col_name2")[0].value;
+              if (new_id == ""){
+                alert("Debes introducir un id")
+                return;
+              }
+              $("#col_name2")[0].value = "";
+              if (select == ""){
+                return; // si no esta selecionado se acaba
+                
+              }
+              makeApiCall(new_id,select,"new");
+
+          });
+
+
+        $( ".form_save" ).submit(function(event) {
+
           event.preventDefault(); //con esto no se recarga la pagina
-          var new_id = $("#col_name2")[0].value;
-          if (new_id == ""){
-            alert("Debes introducir un id")
-            return;
-          }
-          $("#col_name2")[0].value = "";
-          if (select == ""){
-            return; // si no esta selecionado se acaba
-            
-          }
-          makeApiCall(new_id,select,"new");
 
-      });
+          var github;
+          var repo;
+
+          /////cogerToken
+          var token = $("#f-token")[0].value; //token  del formulario
+          github = new Github({
+            token: token,
+            auth: "oauth"
+          });
+
+          //cogerrepo
+          var username = "a-malagon";
+          var reponame = $("#f-name-r")[0].value;
+          repo = github.getRepo(username, reponame);
+
+
+          //mostarrepo
+
+          //escribirfuchero
+          var dict_global = {collection: collection, hotel_users: hotel_users};
+          var nombreFichero = $("#f-name-f")[0].value;
+          var contenidoFichero = JSON.stringify(dict_global);
+          var mensajeCommit = $("#f-name-c")[0].value;
+
+          repo.write('master', nombreFichero, contenidoFichero, mensajeCommit);
+
+        });
+
+        
+    $( "#form_load" ).submit(function(event) {
+
+        event.preventDefault(); //con esto no se recarga la pagina
+        var github;
+        var repo;
+
+        /////cogerToken
+        var token = $("#f-token2")[0].value; //token  del formulario
+        github = new Github({
+          token: token,
+          auth: "oauth"
+        });
+
+        //cogerrepo
+        var username = "a-malagon";
+        var reponame = $("#f-name-r2")[0].value;
+        repo = github.getRepo(username, reponame);
+        var nombreFichero = $("#f-name-f2")[0].value;
+
+        repo.read('master', nombreFichero , function(err, data) {
+          console.log (err, data);
+          var json = JSON.parse(data);
+
+          collection = json.collection;
+          hotel_users = json.hotel_users;
+
+          $(".columColecciones2 ul").html("");
+          Object.keys(collection).forEach(function(i){
+
+            $(".columColecciones2 ul").append("<li>" + i + "</li>");
+
+
+          });
+
+          ///esta funvcion esta repetida, mejorarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+              $(".columColecciones2 li").click(function(event){
+                var coll = event.target.textContent;
+                
+                $(".col_title").html(coll)
+                var colum = coll + ":";
+                $("#colSelect").html(colum)
+
+                $("#mostrarColecciones ul").html("");
+                $(".columColecciones ul").html("");
+                var hotel;
+                collection[coll].forEach(function(n){
+
+                  hotel = n.basicData.name;
+                  $("#mostrarColecciones ul").append("<li>" + hotel + "</li>")
+                  $(".columColecciones ul").append("<li>" + hotel + "</li>");
+                });
+                
+              });
+
+
+          console.log(json.collection)
+          /**$.getJSON(data, function(err,data2) {
+            console.log(err,data2)
+          });*/
+        })
+
+    });
 
 });

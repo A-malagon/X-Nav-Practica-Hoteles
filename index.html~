@@ -36,6 +36,11 @@
                 <li class="active"><a href="#principal" data-toggle="tab">Inicio</a></li>
                 <li><a href="#colecciones" data-toggle="tab">Colecciones</a></li>
                 <li><a href="#alojados" data-toggle="tab">Gestión de hoteles alojados</a></li>
+                
+                <span class=botones>
+                    <input type="submit" class="btn btn-primary" value="Cargar">
+                    <input type="submit" class="btn btn-primary" value="Guardar">
+                </span>
               </ul>
             </div><!--/.nav-collapse -->
           </div>
@@ -72,7 +77,22 @@
                       <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                       <span class="sr-only">Next</span>
                     </a>
-                </div>          
+                </div> 
+
+
+                <form class="form_save">
+
+                    <label>Token:</label>
+                    <input id="f-token" type="text" class="form-control"  placeholder="Token...">
+                    <label>Nombre repositorio:</label>
+                    <input id="f-name-r" type="text" class="form-control"  placeholder="Nombre...">
+                    <label>Nombre fichero:</label>
+                    <input id="f-name-f" type="text" class="form-control"  placeholder="Nombre...">
+                    <label>Asunto commit:</label>
+                    <input id="f-name-c" type="text" class="form-control"  placeholder="Nombre...">
+                    <input type="submit" class="btn btn-primary" value="Enviar">
+
+                </form>         
               </div>
 
 
@@ -101,7 +121,8 @@
 
                     <h4><strong>Hoteles en la colección: <span class="col_title"></span></strong></h4>
                     <div id="mostrarColecciones"><ul></ul></div>  
-        
+      
+                     
               </div>
 
               <div id="moverHoteles" class="listaHoteles">
@@ -128,8 +149,8 @@
                     
                  
                     <h4><strong>Descripción del hotel seleccionado: </strong></h4>
-                    <div id="descHotelSelect"></div> 
-  
+                    <div id="descHotelSelect"></div>
+      
               </div>
 
             </div>
