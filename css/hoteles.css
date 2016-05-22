@@ -26,10 +26,10 @@ html,body{
 #borrarPopUp{ 
 	background-repeat:no-repeat; 
 	height:20px; 
-	width:100px; 
+	width:100%; 
 	background-size:19px; 
 	background-position:center;
-    background-color:red;
+    background-color:orange;
 	float: right;
 }
 

@@ -78,7 +78,14 @@ function show_accomodation(){
     var markerexists = false;
     
 
-    var marker = L.marker([lat, lon]);
+    var Icon = L.icon({
+        iconUrl: 'images/casa.png',
+
+        iconSize:     [55, 55],
+        iconAnchor:   [22, 94], 
+        popupAnchor:  [6, -83] 
+    });
+    var marker = L.marker([lat, lon], {icon: Icon});
    
     for (var i = 0; i < layers.length; i++) {
 
