@@ -21,6 +21,8 @@ html,body{
     background-size: 171px 26px;
 }
 
+
+
 #borrarPopUp{ 
 	background-repeat:no-repeat; 
 	height:20px; 
@@ -38,7 +40,7 @@ html,body{
     height:30%;
 }
 
-#myCarousel .item img {width: 500px; position:relative; left:350px;}
+#myCarousel .item img {width: 350px; position:relative; left:425px;}
 
 #myCarousel {margin:auto;}
 
@@ -56,6 +58,39 @@ html,body{
     bottom: 0;
     width: 100%;
     height:97%;
+}
+
+#principal #cursorCargaCol{
+    cursor:context-menu;
+}
+
+#principal #containerMap{
+    cursor:context-menu;
+}
+
+#principal #printHoteles{
+    cursor:pointer;
+}
+
+#colecciones #moverHoteles{
+    cursor:move;
+}
+
+#colecciones #containerCollections{
+    cursor:context-menu;
+}
+
+#colecciones #cursorColecciones{
+    cursor:pointer;
+}
+
+
+#alojados #containerDescription{
+    cursor:cell;
+}
+
+#alojados #content{
+    cursor:context-menu;
 }
 
 
@@ -138,17 +173,22 @@ html,body{
   }
 
 
-#guardar{
-  top: 12px;
-  width: 10%;
+#botonGuardar{
+    
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 7%;
   height: 30%;
 }
 
-#cargar{
-  bottom: 12px;
-  width: 10%;
+#botonCargar{
+    
+  margin-top: 10px;
+  margin-left: 190px;
+  width: 7%;
   height: 30%;
 }
+
 
 #cargarHoteles{
   position: absolute;
@@ -165,5 +205,56 @@ html,body{
   left: 0;
 }
 
+
+#localesettings{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.country{
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+
+.language, .currency{
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 10px;
+    color: orange;
+}
+
+
+div.container li.active ::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 80%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-bottom: 4px solid orange;
+}
+
+.__flag.__es {
+    background-position: -323px 0;
+}
+
+.__flag {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 70px;
+    margin-top: 10px;
+    background-image: url(//cdn2.momondo.net/a-8/assets/images/flags-16-v2.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
 
 

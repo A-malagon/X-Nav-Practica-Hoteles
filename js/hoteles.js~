@@ -2,8 +2,8 @@
 var layers = [] 
 var collection = {}
 
-var hotel_users = {} //dicionario con clave holet y valor array de usuarios
-var select = ""; //que nombre esta selecionado
+var hotel_users = {} 
+var select = ""; 
 
 function removeMarker(lat,lon){
 
@@ -25,7 +25,7 @@ function show_info(no){
     var lon = accomodation.geoData.longitude;
     var url = accomodation.basicData.web;
     var name = accomodation.basicData.name;
-    select = name; //selecionada esta el hotel con este nombre
+    select = name; 
     var desc = accomodation.basicData.body;
     var imgs = accomodation.multimedia.media;
     var cat = accomodation.extradata.categorias.categoria.item[1]['#text'];
@@ -55,7 +55,7 @@ function show_info(no){
         first = ["",""];
     };
     $("#carouselFotos").show();
-//pintar usuarios goole plus
+
     $("#content").html("");
     var id;
     hotel_users[name].forEach(function(id){
@@ -111,7 +111,7 @@ function get_accomodations(){
       hotel += encontrados + '<ul>';
       for (var i = 0; i < accomodations.length; i++) {
         hotel += '<li no=' + i + '>' + accomodations[i].basicData.title + '</li>';
-        var users_plus = []; //array vacio usuarios google plus
+        var users_plus = [];
         hotel_users[accomodations[i].basicData.title] =  users_plus;
       }
       hotel += "</ul>";
@@ -125,6 +125,32 @@ function get_accomodations(){
 };
 
 
+function cargarFormulario(){
+    $('#form_load').bPopup({
+        easing: 'easeOutBack',
+        speed: 450,
+        transition: 'slideDown',
+        fadeSpeed: 'slow',
+        followSpeed: 1500,
+        modalColor: 'greenYellow',
+        transitionClose: 'slideBack'
+    });
+};
+
+
+function guardarFormulario(){
+    $('#form_save').bPopup({
+        easing: 'easeOutBack',
+        speed: 450,
+        transition: 'slideDown',
+        fadeSpeed: 'slow',
+        followSpeed: 1500,
+        modalColor: 'greenYellow',
+        transitionClose: 'slideBack'
+    });
+};
+
+
 $(document).ready(function() {
     $('#tabs').tab();
 
@@ -134,6 +160,9 @@ $(document).ready(function() {
     }).addTo(map);
 
     $("#cargarHoteles").click(get_accomodations);
+
+    $('#botonCargar').click(cargarFormulario);
+    $('#botonGuardar').click(guardarFormulario);
 
 
     map.on('popupopen', function() {
@@ -188,7 +217,7 @@ $(document).ready(function() {
 
 
           $( "#form2" ).submit(function(event) {
-              event.preventDefault(); //con esto no se recarga la pagina
+              event.preventDefault(); 
               var new_id = $("#col_name2")[0].value;
               if (new_id == ""){
                 alert("Debes introducir un id")
@@ -196,7 +225,7 @@ $(document).ready(function() {
               }
               $("#col_name2")[0].value = "";
               if (select == ""){
-                return; // si no esta selecionado se acaba
+                return; 
                 
               }
               makeApiCall(new_id,select,"new");
@@ -204,29 +233,29 @@ $(document).ready(function() {
           });
 
 
-        $( ".form_save" ).submit(function(event) {
+        $( "#form_save" ).submit(function(event) {
 
-          event.preventDefault(); //con esto no se recarga la pagina
+          event.preventDefault(); 
 
           var github;
           var repo;
 
-          /////cogerToken
-          var token = $("#f-token")[0].value; //token  del formulario
+         
+          var token = $("#f-token")[0].value; 
           github = new Github({
             token: token,
             auth: "oauth"
           });
 
-          //cogerrepo
+          
           var username = "a-malagon";
           var reponame = $("#f-name-r")[0].value;
           repo = github.getRepo(username, reponame);
 
 
-          //mostarrepo
+          
 
-          //escribirfuchero
+         
           var dict_global = {collection: collection, hotel_users: hotel_users};
           var nombreFichero = $("#f-name-f")[0].value;
           var contenidoFichero = JSON.stringify(dict_global);
@@ -239,18 +268,18 @@ $(document).ready(function() {
         
     $( "#form_load" ).submit(function(event) {
 
-        event.preventDefault(); //con esto no se recarga la pagina
+        event.preventDefault(); 
         var github;
         var repo;
 
-        /////cogerToken
-        var token = $("#f-token2")[0].value; //token  del formulario
+        
+        var token = $("#f-token2")[0].value; 
         github = new Github({
           token: token,
           auth: "oauth"
         });
 
-        //cogerrepo
+        
         var username = "a-malagon";
         var reponame = $("#f-name-r2")[0].value;
         repo = github.getRepo(username, reponame);
@@ -271,7 +300,7 @@ $(document).ready(function() {
 
           });
 
-          ///esta funvcion esta repetida, mejorarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+          
               $(".columColecciones2 li").click(function(event){
                 var coll = event.target.textContent;
                 
@@ -293,9 +322,9 @@ $(document).ready(function() {
 
 
           console.log(json.collection)
-          /**$.getJSON(data, function(err,data2) {
-            console.log(err,data2)
-          });*/
+
         })
+
+    });
 
 });
